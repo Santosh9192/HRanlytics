@@ -45,7 +45,6 @@ data/processed/*.csv
 reports/excel/*.xlsx
 reports/excel/*.csv
 reports/pdf/*.pdf
-reports/screenshots/*.png
 reports/html/*.html
 
 # Power BI
