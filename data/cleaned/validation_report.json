@@ -1,0 +1,251 @@
+{
+  "summary": {
+    "total_checks": 40,
+    "passed": 40,
+    "failed": 0,
+    "pass_rate": 100.0,
+    "validation_date": "2026-07-13 21:51:06"
+  },
+  "results": [
+    {
+      "check_name": "Missing values in employee_id",
+      "status": "PASS",
+      "details": "0 missing (0.00%)",
+      "severity": "high"
+    },
+    {
+      "check_name": "Missing values in employee_name",
+      "status": "PASS",
+      "details": "0 missing (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Missing values in age",
+      "status": "PASS",
+      "details": "0 missing (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Missing values in gender",
+      "status": "PASS",
+      "details": "0 missing (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Missing values in department",
+      "status": "PASS",
+      "details": "0 missing (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Missing values in monthly_income",
+      "status": "PASS",
+      "details": "0 missing (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Missing values in attrition",
+      "status": "PASS",
+      "details": "0 missing (0.00%)",
+      "severity": "high"
+    },
+    {
+      "check_name": "Missing values in hire_date",
+      "status": "PASS",
+      "details": "0 missing (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Overall missing data",
+      "status": "PASS",
+      "details": "3842 missing cells out of 200000 (1.92%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Numeric type check: age",
+      "status": "PASS",
+      "details": "0 non-numeric values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Numeric type check: monthly_income",
+      "status": "PASS",
+      "details": "0 non-numeric values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Numeric type check: job_level",
+      "status": "PASS",
+      "details": "0 non-numeric values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Numeric type check: years_at_company",
+      "status": "PASS",
+      "details": "0 non-numeric values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Numeric type check: years_in_current_role",
+      "status": "PASS",
+      "details": "0 non-numeric values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Numeric type check: years_since_last_promotion",
+      "status": "PASS",
+      "details": "0 non-numeric values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Numeric type check: performance_rating",
+      "status": "PASS",
+      "details": "0 non-numeric values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Numeric type check: job_satisfaction",
+      "status": "PASS",
+      "details": "0 non-numeric values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Date validity check: hire_date",
+      "status": "PASS",
+      "details": "0 invalid dates found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Date validity check: exit_date",
+      "status": "PASS",
+      "details": "0 invalid exit dates found (attrited employees)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Age range check (18-80)",
+      "status": "PASS",
+      "details": "0 records with invalid age",
+      "severity": "high"
+    },
+    {
+      "check_name": "Salary > $0 check",
+      "status": "PASS",
+      "details": "0 records with zero/negative salary",
+      "severity": "high"
+    },
+    {
+      "check_name": "job_satisfaction range check (1-4)",
+      "status": "PASS",
+      "details": "0 out of range",
+      "severity": "medium"
+    },
+    {
+      "check_name": "environment_satisfaction range check (1-4)",
+      "status": "PASS",
+      "details": "0 out of range",
+      "severity": "medium"
+    },
+    {
+      "check_name": "relationship_satisfaction range check (1-4)",
+      "status": "PASS",
+      "details": "0 out of range",
+      "severity": "medium"
+    },
+    {
+      "check_name": "work_life_balance range check (1-4)",
+      "status": "PASS",
+      "details": "0 out of range",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Performance rating range (1-4)",
+      "status": "PASS",
+      "details": "0 out of range",
+      "severity": "medium"
+    },
+    {
+      "check_name": "years_at_company non-negative check",
+      "status": "PASS",
+      "details": "0 negative values",
+      "severity": "medium"
+    },
+    {
+      "check_name": "years_in_current_role non-negative check",
+      "status": "PASS",
+      "details": "0 negative values",
+      "severity": "medium"
+    },
+    {
+      "check_name": "years_since_last_promotion non-negative check",
+      "status": "PASS",
+      "details": "0 negative values",
+      "severity": "medium"
+    },
+    {
+      "check_name": "years_with_current_manager non-negative check",
+      "status": "PASS",
+      "details": "0 negative values",
+      "severity": "medium"
+    },
+    {
+      "check_name": "EmployeeID uniqueness",
+      "status": "PASS",
+      "details": "0 duplicate IDs found",
+      "severity": "high"
+    },
+    {
+      "check_name": "Attrition-ExitDate consistency",
+      "status": "PASS",
+      "details": "0 attrited without exit date, 0 active with exit date",
+      "severity": "high"
+    },
+    {
+      "check_name": "Hire date before exit date",
+      "status": "PASS",
+      "details": "All valid",
+      "severity": "critical"
+    },
+    {
+      "check_name": "Gender valid values",
+      "status": "PASS",
+      "details": "0 invalid gender values",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Attrition valid values",
+      "status": "PASS",
+      "details": "0 invalid attrition values",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Outlier check: age",
+      "status": "PASS",
+      "details": "0 outliers (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Outlier check: monthly_income",
+      "status": "PASS",
+      "details": "0 outliers (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Outlier check: years_at_company",
+      "status": "PASS",
+      "details": "0 outliers (0.00%)",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Zero value check: years_at_company",
+      "status": "PASS",
+      "details": "0 zero values found",
+      "severity": "medium"
+    },
+    {
+      "check_name": "Zero value check: monthly_income",
+      "status": "PASS",
+      "details": "0 zero values found",
+      "severity": "medium"
+    }
+  ]
+}

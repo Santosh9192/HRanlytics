@@ -1,0 +1,35 @@
+# ============================================================
+# HR Analytics Dashboard - Python Dependencies
+# ============================================================
+# Install: pip install -r requirements.txt
+
+# Core Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Data Visualization
+matplotlib>=3.7.0
+plotly>=5.15.0
+
+# Excel Export
+openpyxl>=3.1.0
+
+# Synthetic Data Generation
+faker>=20.0.0
+
+# Interactive Dashboard (optional)
+streamlit>=1.28.0
+
+# Statistical Analysis
+scipy>=1.11.0
+
+# Database Connectivity (optional - for PostgreSQL)
+psycopg2-binary>=2.9.0
+sqlalchemy>=2.0.0
+
+# Reporting
+jinja2>=3.1.0
+markdown>=3.4.0
+
+# Utilities
+python-dateutil>=2.8.0

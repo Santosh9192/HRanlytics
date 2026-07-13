@@ -1,0 +1,83 @@
+# ============================================================
+# Git Ignore for HR Analytics Dashboard
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+.python-version
+
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Data Files (raw data - not committed)
+data/raw/*.csv
+data/raw/*.xlsx
+data/cleaned/*.csv
+data/processed/*.csv
+
+# But keep these files:
+!data/raw/.gitkeep
+!data/cleaned/.gitkeep
+!data/processed/.gitkeep
+
+# Reports
+reports/excel/*.xlsx
+reports/excel/*.csv
+reports/pdf/*.pdf
+reports/screenshots/*.png
+reports/html/*.html
+
+# Power BI
+powerbi/*.pbix
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+*.iml
+.vscode/settings.json
+.vscode/launch.json
+
+# Database
+*.db
+*.sqlite
+
+# Git
+*.orig
+*.patch

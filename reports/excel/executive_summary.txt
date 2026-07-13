@@ -1,0 +1,47 @@
+============================================================
+  HR ANALYTICS - EXECUTIVE SUMMARY REPORT
+============================================================
+  Generated: 2026-07-13 21:51:22
+  Dataset: 5,000 Employees
+
+------------------------------------------------------------
+  KEY PERFORMANCE INDICATORS
+------------------------------------------------------------
+  Total Employees:        5,000
+  Active Employees:       3,842
+  Attrition Rate:         23.2%
+  Average Salary:         $8,388.35
+  Average Age:            41.2 years
+  Average Tenure:         4.6 years
+  Avg Job Satisfaction:   2.90/4
+  Avg Work-Life Balance:  2.83/4
+  Promotion Rate:         31.2%
+  Overtime %:             30.0%
+  Female %:               48.2%
+
+------------------------------------------------------------
+  DEPARTMENT HIGHLIGHTS
+------------------------------------------------------------
+  Research & Development          927 emp  $   8,466   17.1% attrit
+  Information Technology          758 emp  $   8,806   20.6% attrit
+  Customer Support                647 emp  $   7,725   35.4% attrit
+  Sales                           588 emp  $   8,440   29.4% attrit
+  Marketing                       455 emp  $   8,309   27.7% attrit
+  Operations                      396 emp  $   8,606   20.2% attrit
+  Finance                         366 emp  $   8,878   13.9% attrit
+  Human Resources                 304 emp  $   8,118   23.4% attrit
+  Administration                  298 emp  $   7,673   29.5% attrit
+  Legal                           261 emp  $   8,677    9.6% attrit
+
+------------------------------------------------------------
+  TOP INSIGHTS
+------------------------------------------------------------
+  1. Highest attrition department: Customer Support (35.4%)
+  2. Highest paying department: Finance ($8,878)
+  3. Overall female representation: 48.2%
+  4. Employees working overtime: 30.0%
+  5. Average years since last promotion: 1.5
+
+============================================================
+  END OF REPORT
+============================================================

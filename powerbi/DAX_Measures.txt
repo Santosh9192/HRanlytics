@@ -1,0 +1,423 @@
+============================================================
+DAX MEASURES FOR HR ANALYTICS POWER BI DASHBOARD
+============================================================
+Database: PostgreSQL - hr_analytics
+Tables: fact_employee, dim_department, dim_job_role, 
+        dim_education_level, dim_location, dim_date
+
+============================================================
+1. BASIC COUNT MEASURES
+============================================================
+
+-- Total Employees
+Total Employees = COUNTROWS(fact_employee)
+
+-- Active Employees
+Active Employees = 
+CALCULATE(
+    COUNTROWS(fact_employee),
+    fact_employee[is_active] = TRUE
+)
+
+-- Attrited Employees
+Attrited Employees = 
+CALCULATE(
+    COUNTROWS(fact_employee),
+    fact_employee[attrition] = "Yes"
+)
+
+============================================================
+2. RATE MEASURES
+============================================================
+
+-- Attrition Rate
+Attrition Rate % = 
+DIVIDE(
+    [Attrited Employees],
+    [Total Employees],
+    0
+) * 100
+
+-- Attrition Rate (Active Base)
+Attrition Rate (Active Base) % = 
+VAR TotalActive = 
+    CALCULATE(
+        COUNTROWS(fact_employee),
+        fact_employee[is_active] = TRUE
+    )
+VAR TotalAttrited = [Attrited Employees]
+RETURN
+    DIVIDE(TotalAttrited, TotalAttrited + TotalActive, 0) * 100
+
+-- Promotion Rate
+Promotion Rate % = 
+VAR TotalEmployees = [Total Employees]
+VAR PromotedThisYear = 
+    CALCULATE(
+        COUNTROWS(fact_employee),
+        fact_employee[years_since_last_promotion] = 0
+    )
+RETURN
+    DIVIDE(PromotedThisYear, TotalEmployees, 0) * 100
+
+-- Overtime Percentage
+Overtime % = 
+VAR TotalEmployees = [Total Employees]
+VAR OvertimeEmployees = 
+    CALCULATE(
+        COUNTROWS(fact_employee),
+        fact_employee[overtime] = "Yes"
+    )
+RETURN
+    DIVIDE(OvertimeEmployees, TotalEmployees, 0) * 100
+
+-- Female Percentage
+Female % = 
+VAR TotalEmployees = [Total Employees]
+VAR FemaleEmployees = 
+    CALCULATE(
+        COUNTROWS(fact_employee),
+        fact_employee[gender] = "Female"
+    )
+RETURN
+    DIVIDE(FemaleEmployees, TotalEmployees, 0) * 100
+
+============================================================
+3. AVERAGE MEASURES
+============================================================
+
+-- Average Monthly Income
+Avg Salary = AVERAGE(fact_employee[monthly_income])
+
+-- Median Monthly Income
+Median Salary = 
+MEDIANX(
+    fact_employee,
+    fact_employee[monthly_income]
+)
+
+-- Average Age
+Avg Age = AVERAGE(fact_employee[age])
+
+-- Average Tenure (Years at Company)
+Avg Tenure = AVERAGE(fact_employee[years_at_company])
+
+-- Average Job Satisfaction
+Avg Job Satisfaction = AVERAGE(fact_employee[job_satisfaction])
+
+-- Average Work-Life Balance
+Avg Work-Life Balance = AVERAGE(fact_employee[work_life_balance])
+
+-- Average Performance Rating
+Avg Performance Rating = AVERAGE(fact_employee[performance_rating])
+
+-- Average Years Since Last Promotion
+Avg Years Since Promotion = 
+AVERAGE(fact_employee[years_since_last_promotion])
+
+-- Average Salary Hike
+Avg Salary Hike % = 
+AVERAGE(fact_employee[percent_salary_hike])
+
+-- Average Training Times
+Avg Training Times = 
+AVERAGE(fact_employee[training_times_last_year])
+
+-- Average Distance from Home
+Avg Distance from Home = 
+AVERAGE(fact_employee[distance_from_home])
+
+============================================================
+4. COMPENSATION MEASURES
+============================================================
+
+-- Total Monthly Salary Cost
+Total Monthly Salary Cost = 
+SUM(fact_employee[monthly_income])
+
+-- Max Salary
+Max Salary = MAX(fact_employee[monthly_income])
+
+-- Min Salary
+Min Salary = MIN(fact_employee[monthly_income])
+
+-- Salary Range
+Salary Range = [Max Salary] - [Min Salary]
+
+-- Salary to Tenure Ratio
+Salary to Tenure Ratio = 
+DIVIDE(
+    [Avg Salary],
+    [Avg Tenure],
+    0
+)
+
+============================================================
+5. SATISFACTION MEASURES
+============================================================
+
+-- Low Job Satisfaction Count
+Low Job Satisfaction = 
+CALCULATE(
+    COUNTROWS(fact_employee),
+    fact_employee[job_satisfaction] <= 2
+)
+
+-- High Job Satisfaction Count
+High Job Satisfaction = 
+CALCULATE(
+    COUNTROWS(fact_employee),
+    fact_employee[job_satisfaction] >= 3
+)
+
+-- Satisfaction Score (Composite)
+Satisfaction Score = 
+DIVIDE(
+    AVERAGE(fact_employee[job_satisfaction]) +
+    AVERAGE(fact_employee[environment_satisfaction]) +
+    AVERAGE(fact_employee[relationship_satisfaction]) +
+    AVERAGE(fact_employee[work_life_balance]),
+    4
+)
+
+-- Low Work-Life Balance %
+Low WLB % = 
+VAR Total = [Total Employees]
+VAR LowWLB = 
+    CALCULATE(
+        COUNTROWS(fact_employee),
+        fact_employee[work_life_balance] <= 2
+    )
+RETURN
+    DIVIDE(LowWLB, Total, 0) * 100
+
+============================================================
+6. DYNAMIC MEASURES (With CALCULATE)
+============================================================
+
+-- Active Employee Count by Selected Department
+Active Employees (Dynamic) = 
+VAR SelectedDept = SELECTEDVALUE(dim_department[department_name])
+RETURN
+    CALCULATE(
+        [Active Employees],
+        dim_department[department_name] = SelectedDept
+    )
+
+-- Attrition Rate by Selected Gender
+Attrition Rate by Gender = 
+VAR SelectedGender = SELECTEDVALUE(fact_employee[gender])
+RETURN
+    CALCULATE(
+        [Attrition Rate %],
+        fact_employee[gender] = SelectedGender
+    )
+
+-- Average Salary by Selected Job Level
+Avg Salary by Job Level = 
+VAR SelectedLevel = SELECTEDVALUE(fact_employee[job_level])
+RETURN
+    CALCULATE(
+        [Avg Salary],
+        fact_employee[job_level] = SelectedLevel
+    )
+
+============================================================
+7. TIME INTELLIGENCE MEASURES
+============================================================
+
+-- Monthly Hires
+Monthly Hires = 
+CALCULATE(
+    COUNTROWS(fact_employee),
+    DATESMTD(dim_date[full_date])
+)
+
+-- Monthly Attrition
+Monthly Attrition = 
+CALCULATE(
+    COUNTROWS(fact_employee),
+    fact_employee[attrition] = "Yes",
+    DATESMTD(dim_date[full_date])
+)
+
+-- YTD Hires
+YTD Hires = 
+TOTALYTD(
+    COUNTROWS(fact_employee),
+    dim_date[full_date]
+)
+
+-- YTD Attrition
+YTD Attrition = 
+TOTALYTD(
+    CALCULATE(
+        COUNTROWS(fact_employee),
+        fact_employee[attrition] = "Yes"
+    ),
+    dim_date[full_date]
+)
+
+-- Headcount Growth
+Headcount Growth = 
+[Monthly Hires] - [Monthly Attrition]
+
+============================================================
+8. RANKING MEASURES
+============================================================
+
+-- Department Salary Rank
+Department Salary Rank = 
+RANKX(
+    ALL(dim_department[department_name]),
+    [Avg Salary],
+    ,
+    DESC,
+    Dense
+)
+
+-- Top N Departments by Attrition
+Top Attrition Departments = 
+TOPN(
+    5,
+    VALUES(dim_department[department_name]),
+    [Attrition Rate %],
+    DESC
+)
+
+============================================================
+9. ADVANCED MEASURES
+============================================================
+
+-- Attrition Risk Score (Active Employees)
+Attrition Risk Score = 
+VAR LowSatisfaction = 
+    IF(SELECTEDVALUE(fact_employee[job_satisfaction]) <= 2, 3, 0)
+VAR LowWLB = 
+    IF(SELECTEDVALUE(fact_employee[work_life_balance]) <= 2, 3, 0)
+VAR OvertimeRisk = 
+    IF(SELECTEDVALUE(fact_employee[overtime]) = "Yes", 2, 0)
+VAR PromotionRisk = 
+    IF(SELECTEDVALUE(fact_employee[years_since_last_promotion]) > 3, 2, 0)
+VAR TenureRisk = 
+    IF(SELECTEDVALUE(fact_employee[years_at_company]) < 2, 2, 0)
+RETURN
+    LowSatisfaction + LowWLB + OvertimeRisk + PromotionRisk + TenureRisk
+
+-- Risk Category
+Risk Category = 
+SWITCH(
+    TRUE(),
+    [Attrition Risk Score] >= 10, "Critical Risk",
+    [Attrition Risk Score] >= 7, "High Risk",
+    [Attrition Risk Score] >= 4, "Medium Risk",
+    "Low Risk"
+)
+
+-- Employee Tenure Category
+Tenure Category = 
+SWITCH(
+    TRUE(),
+    SELECTEDVALUE(fact_employee[years_at_company]) < 2, "New Hire",
+    SELECTEDVALUE(fact_employee[years_at_company]) <= 5, "Short Term",
+    SELECTEDVALUE(fact_employee[years_at_company]) <= 10, "Mid Term",
+    "Long Term"
+)
+
+-- Performance Category
+Performance Category = 
+SWITCH(
+    SELECTEDVALUE(fact_employee[performance_rating]),
+    1, "Below Average",
+    2, "Average",
+    3, "Good",
+    4, "Excellent",
+    "Unknown"
+)
+
+-- Salary Band
+Salary Band = 
+SWITCH(
+    TRUE(),
+    SELECTEDVALUE(fact_employee[monthly_income]) < 5000, "Entry Level",
+    SELECTEDVALUE(fact_employee[monthly_income]) < 7500, "Junior",
+    SELECTEDVALUE(fact_employee[monthly_income]) < 10000, "Mid Level",
+    SELECTEDVALUE(fact_employee[monthly_income]) < 15000, "Senior",
+    "Executive"
+)
+
+============================================================
+10. COMPARISON MEASURES
+============================================================
+
+-- Attrition vs Company Average
+Attrition vs Company Avg = 
+[Attrition Rate %] - 
+CALCULATE(
+    [Attrition Rate %],
+    ALL(dim_department)
+)
+
+-- Salary vs Department Average
+Salary vs Dept Avg = 
+[Avg Salary] - 
+CALCULATE(
+    [Avg Salary],
+    ALLEXCEPT(fact_employee, dim_department[department_name])
+)
+
+-- Gender Pay Gap
+Gender Pay Gap = 
+VAR MaleAvgSalary = 
+    CALCULATE(
+        [Avg Salary],
+        fact_employee[gender] = "Male"
+    )
+VAR FemaleAvgSalary = 
+    CALCULATE(
+        [Avg Salary],
+        fact_employee[gender] = "Female"
+    )
+RETURN
+    MaleAvgSalary - FemaleAvgSalary
+
+-- Gender Pay Gap %
+Gender Pay Gap % = 
+VAR MaleAvgSalary = 
+    CALCULATE(
+        [Avg Salary],
+        fact_employee[gender] = "Male"
+    )
+VAR FemaleAvgSalary = 
+    CALCULATE(
+        [Avg Salary],
+        fact_employee[gender] = "Female"
+    )
+RETURN
+    DIVIDE(MaleAvgSalary - FemaleAvgSalary, MaleAvgSalary, 0) * 100
+
+============================================================
+11. DIVERSITY MEASURES
+============================================================
+
+-- Diversity Score (Composite)
+Diversity Score = 
+VAR FemalePct = [Female %]
+VAR MaxFemalePct = 50  -- Ideal target
+RETURN
+    (1 - ABS(FemalePct - MaxFemalePct) / MaxFemalePct) * 100
+
+-- Age Group Diversity Index
+Age Group Diversity = 
+VAR AgeGroups = 
+    DISTINCTCOUNT(fact_employee[age]) / 
+    CALCULATE(
+        DISTINCTCOUNT(fact_employee[age]),
+        ALL(fact_employee)
+    )
+RETURN
+    AgeGroups * 100
+
+============================================================
+END OF DAX MEASURES
+============================================================
